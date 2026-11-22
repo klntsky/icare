@@ -13,9 +13,10 @@ Code examples, unknown skill names, and existing links retain their meaning.
 
 # Website selectable Markdown
 
-`scripts/selectable-markdown.lua` renders Markdown syntax as real DOM text.
-Heading markers, formatting delimiters, list prefixes, and link destinations
-must remain in both `textContent` and native selections, without JavaScript or
-copy-event handlers. Links use absolute website URLs so selected text remains
-portable. Complex structures retain their Markdown source in preformatted blocks.
-The regression test round-trips rendered text back through Pandoc.
+`scripts/selectable-markdown.py` preserves Pandoc's normal rendered HTML while
+aligning its text with the original Markdown. Whole-body `textContent` must equal
+the original source, including frontmatter and escapes, except for whitespace.
+Only heading hashes are visibly added; other source syntax remains hidden but
+selectable, without JavaScript or copy handlers. Clickable links use absolute URLs
+without rewriting the original source text. Regression tests check source identity
+and preservation of the rendered HTML structure and visible text.

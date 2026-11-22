@@ -12,12 +12,14 @@ for source in skills/*/SKILL.md; do
 done
 
 render() {
-  pandoc "$1" \
+  {
+    cat "$1"
+    printf '\0'
+    pandoc "$1" \
     --from=markdown+yaml_metadata_block \
     --to=html5 \
     --lua-filter=scripts/skill-intro.lua \
     --lua-filter=scripts/skill-links.lua \
-    --lua-filter=scripts/selectable-markdown.lua \
     --standalone \
     --include-in-header=scripts/github-corner-style.html \
     --include-in-header=scripts/site-head.html \
@@ -29,8 +31,8 @@ render() {
     --metadata=lang:en \
     --metadata="skill-names=${skill_names[*]}" \
     --metadata="site-url=https://icare.how" \
-    --metadata="page-url=$4" \
-    --output="$2"
+    --metadata="page-url=$4"
+  } | python3 scripts/selectable-markdown.py "$4" > "$2"
 }
 
 render README.md "$output/index.html" icare.how https://icare.how/
