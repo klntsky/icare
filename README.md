@@ -1,4 +1,4 @@
-# 💊 icare.how
+# [icare.how](https://icare.how/)
 
 An agentic software development skill framework that forces you to care.
 
@@ -10,11 +10,11 @@ I believe that giving the user an incomprehensible dump of codified LLM workflow
 
 Skills should be readable, almost as a textbook - while being executable by the agent.
 
-For that reason, the skill text is 100% human-written.
+For that reason, the skills are 100% human-written.
 
 ## The agent is a teacher
 
-The agent guides the user towards a better understanding of the systems involved. Certain actions should not be possible until a consistent understanding is achieved.
+The agent guides the user towards a better understanding of the systems involved.
 
 ## Intent preservation
 
@@ -24,11 +24,11 @@ Every decision must be justified by the developer's intent.
 
 # Skills
 
+- [understand-intent](skills/understand-intent/SKILL.md)
 - [engineer-llm-context](skills/engineer-llm-context/SKILL.md)
 - [test](skills/test/SKILL.md)
 - [test-efficiently](skills/test-efficiently/SKILL.md)
 - [test-intentionally](skills/test-intentionally/SKILL.md)
-- [understand-intent](skills/understand-intent/SKILL.md)
 
 # Current state of the project
 

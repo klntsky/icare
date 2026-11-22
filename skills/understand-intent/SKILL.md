@@ -1,6 +1,6 @@
 ---
 name: understand-intent
-description: Understand and evaluate user's intent before making a decision. If unclear, collect arguments for and against choice options, and clarify with the user.
+description: Understand user's intent in the context of a decision to be made.
 license: Unlicense
 ---
 
@@ -29,4 +29,4 @@ If the stated priorities clearly indicate what choice option should be prioritiz
 
 4. If you get a straight answer for the choice option, but the user's justification is not obvious, ask the user to clarify intent.
 
-5. Preserve that intent in the repo if there is a place to store it, and return back to the outer context to proceed with the choice.
+5. Preserve that intent info using **capture-intent** skill.

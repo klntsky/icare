@@ -6,6 +6,8 @@ license: Unlicense
 
 ## Principles for improving test performance
 
+Before you apply any of these principles, decide if you should using the **understand-intent** skill.
+
 ### TP0. Diagnosing test performance problems
 
 Tests share different types of system resources.
@@ -57,5 +59,4 @@ When to use: if the resources are verifiably isolated enough that we don't care 
 
 If a test runner or framework supports only file-based test parallelisation, then parallelisation is controled by test file structure.
 
-This approach makes it harder to manage shared resources. In this case, consider implementing a test server that manages the test environment and provides an API for test workers to connect to it. It can be made compatible with TP1 layered resource management, but instead of allocating the resources, the helpers should delegate providing them to the test server.
-
+In this case, consider implementing a test server that manages the test environment and provides an API for test workers to connect to it. It can be made compatible with TP1 layered resource management, but instead of allocating the resources, the helpers should delegate providing them to the test server.

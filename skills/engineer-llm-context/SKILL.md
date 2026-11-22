@@ -1,24 +1,22 @@
 ---
 name: engineer-llm-context
-description: Write and review LLM prompts and workflows to avoid common prompting pitfalls. Use when creating or changing prompts, tool instructions, or workflow context.
+description: Avoid common LLM context engineering pitfalls. Use when creating or changing prompts, tool instructions, or workflow context.
 license: Unlicense
 ---
 
 # Engineer LLM context
 
-LLMs are surpisingly bad at prompting, therefore any task that involves writing a prompt requires increased amount of thinking.
+LLMs are surpisingly bad at context engineering, therefore any task that involves writing a prompt requires an increased amount of consideration.
 
-This skill provides an algorithm and a set of rules that helps a LLM agent to avoid common prompting pitfalls.
+# Common context engineering pitfalls
 
-# Common LLM prompting pitfalls
-
-## Prompts restating tool descriptions
+## CE0. Prompts restating tool descriptions
 
 ### How to fix
 If the prompt specifies when the tools should be called, that part should not contain tool descriptions - tool names are enough.
 Otherwise, the tools should not be referenced in the main prompt at all: no need to mention them for the sake of mentioning.
 
-## Unnecessary elaboration
+## CE1. Unnecessary elaboration
 
 ### Example
 
@@ -43,39 +41,44 @@ The most important criterion is whether the elaboration is justified by intent. 
 
 This problem boils down to "opt-in thinking": the LLM assumes that it needs to include as much as possible to ensure that every possible case is covered.
 In reality, such prompts are not efficient.
-Replace repeating phrases with a more concrete referent.
+Replace repeating phrases with a more general or concrete referent after using **understand-intent** skill to confirm the change is justified.
 
-## Outside-context leaks into the prompt
+## CE2. Outside-context leaks into the prompt
 
 LLM inference has a very limited view of the world: only the prompt contents, tool definitions, and tool outputs are visible to the model.
 LLMs consistently fail with presenting just the right amount of context via these mediums because they have limited ability to hypothesize about inference processes that have different context than their own.
 
 ### How to detect
 
-Specific things to watch for - when passed to the LLM context, these are almost always unneeded:
+1. Specific things to watch for - when passed to the LLM context, these are almost always candidates for removal:
 
 - UI settings
 - version numbers
 - domain-specific terms that the LLM can't make sense of in the context of its inference workflow
 
-Universal algorithm for detection: go backwards from expected LLM workflow outputs to the inputs:
-- what are the logical requirements that need to be in the context of a LLM at the final step in order to produce a result?
+2. Identify other candidates for removal. First, split the context into its elements, such as:
+
+- a prompt sentence/statement
+- a tool definition
+- expected tool output schema datum,
+
+Second, run this algorithm for detection: 
+
+Go backwards from expected LLM workflow outputs to the inputs:
+- What are the logical requirements that need to be in the context of a LLM at the final step in order to produce a result?
 - what are their requirements?
-- repeat this question until you get a clear picture of what is really needed for a workflow to run.
-- what did we not use? these are good candidates for removal
+- Repeat this ^ question repeatedly until you get a clear picture of what is really needed for a workflow to run.
+- What ended up not being used? These are good candidates for removal
 
 ### How to fix
 
-For every piece of context, such as:
-- a prompt sentence
-- a rule
-- a tool definition
-- expected tool output,
-construct a justification for why it should be present (what removing it would break).
+Collect candidates for removal as described above.
 
-No justification -> remove
+Try to construct a justification for why it should be present (what removing it would break), using **understand-intent** skill.
 
-## Agentic workflows include too much optional context
+No justification? Remove.
+
+## CE3. Agentic workflows include too much optional context
 
 The purpose of agentic workflows is to orient and execute in a not-very-structured environment.
 
@@ -90,7 +93,7 @@ Additional complexity and worse speed are valid objections to this.
 
 Fix only after user approval.
 
-## Unnecessary reference indirection breaks context locality
+## CE4. Unnecessary reference indirection breaks context locality
 
 LLMs can't resolve references reliably.
 Information scattered across a long context, connected through opaque IDs, is an anti-pattern.
@@ -107,7 +110,7 @@ Information scattered across a long context, connected through opaque IDs, is an
   - Yes -> eliminate
   - No -> use **understand-intent** to decide
 
-## Unnecessary token spending on opaque identifiers
+## CE5. Unnecessary token spending on opaque identifiers
 
 Opaque identifiers are rarely a good idea, but if they are justified by user's intent, they must be used properly, without wasting too many tokens.
 
@@ -124,7 +127,7 @@ Transform between two formats whenever data enters or leaves the LLM context.
 If possible, use type system guarantees to prevent accidential confusion between two formats.
 Before applying this fix, use **understand-intent** skill to decide whether the additional complexity is justified by the token savings.
 
-## Operational LLM workflows contain too much decision branching
+## CE6. Operational LLM workflows contain too much decision branching
 
 LLMs can perform dispatch, but they are slow.
 
