@@ -4,6 +4,9 @@ set -euo pipefail
 output=$(realpath -m "${1:?Usage: bash scripts/build-site.sh OUTPUT_DIRECTORY}")
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 mkdir "$output"
+mkdir "$output/assets"
+cp scripts/copy-markdown.js scripts/vendor/turndown-7.2.5.js \
+  scripts/vendor/turndown-LICENSE "$output/assets/"
 
 skill_names=()
 for source in skills/*/SKILL.md; do
@@ -23,6 +26,8 @@ render() {
     --include-before-body=scripts/github-corner.html \
     --include-before-body=scripts/site-logo.html \
     --metadata="pagetitle=$3" \
+    --include-before-body=scripts/content-start.html \
+    --include-after-body=scripts/content-end.html \
     --metadata=lang:en \
     --metadata="skill-names=${skill_names[*]}" \
     --output="$2"
