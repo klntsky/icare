@@ -22,6 +22,14 @@ Intents are first-class citizens in the codebase, living in the form of requirem
 
 Every decision must be justified by the developer's intent. 
 
+# Skills
+
+- [context-engineering](skills/context-engineering/SKILL.md)
+- [test](skills/test/SKILL.md)
+- [test-efficiently](skills/test-efficiently/SKILL.md)
+- [test-intentionally](skills/test-intentionally/SKILL.md)
+- [understand-intent](skills/understand-intent/SKILL.md)
+
 # Current state of the project
 
 Only a tiny share of the project's scope has been covered. Not released yet

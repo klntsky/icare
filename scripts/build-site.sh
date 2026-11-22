@@ -9,6 +9,7 @@ render() {
   pandoc "$1" \
     --from=markdown+yaml_metadata_block \
     --to=html5 \
+    --lua-filter=scripts/skill-links.lua \
     --standalone \
     --metadata="pagetitle=$3" \
     --metadata=lang:en \
