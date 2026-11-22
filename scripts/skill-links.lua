@@ -18,11 +18,12 @@ function Pandoc(document)
     Link = function(link)
       return Link(link), false
     end,
-    RawInline = function(inline)
-      if inline.format == "html" then
-        local name = inline.text:match("^<([a-z0-9%-]+)>$")
+    Strong = function(strong)
+      if #strong.content == 1 and strong.content[1].t == "Str" then
+        local name = strong.content[1].text
         if known_skills[name] then
-          return pandoc.Link(name, "/to/" .. name .. "/")
+          strong.content = { pandoc.Link(strong.content, "/to/" .. name .. "/") }
+          return strong, false
         end
       end
     end,
