@@ -1,16 +1,26 @@
+# icare.how
+
+An agentic software development skill framework that forces you to care.
+
 # Principles
 
 ## Skills are educational material
 
-They are intended to be a useful read for humans too. I believe that giving the user an incomprehensible dump of  codified LLM workflows is doing a disservice to the goal of elevating the user's professional skills.
+I believe that giving the user an incomprehensible dump of codified LLM workflows is doing a disservice to the goal of elevating the user's own professional skills.
+
+Skills should be readable, almost as a textbook - while being executable by the agent.
+
+For that reason, the skill text is 100% human-written.
 
 ## The agent is a teacher
 
-It guides the user towards a better understanding of the systems involved
+The agent guides the user towards a better understanding of the systems involved. Certain actions should not be possible until a consistent understanding is achieved.
 
-## Choices are justified by explicitly stated intent
+## Intent preservation
 
-Every tradeoff must be justified by the developer's intent. The intent is explicitly codified and checked into the source code. No work is done before intent is explicit enough
+Intents are first-class citizens in the codebase, living in the form of requirements, specifications, and documentation. The agent makes decisions based on these documents, and maintains them as the codebase evolves.
+
+Every decision must be justified by the developer's intent. 
 
 # Current state of the project
 
