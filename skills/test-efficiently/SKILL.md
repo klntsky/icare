@@ -1,5 +1,5 @@
 ---
-name: test-performance
+name: test-efficiently
 description: Improves performance of the tests
 license: Unlicense
 ---

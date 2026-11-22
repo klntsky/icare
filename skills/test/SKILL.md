@@ -1,7 +1,7 @@
 ---
-name: test-engineering
+name: test
 description: Test engineering router skill
 license: Unlicense
 ---
 
-# Test engineering
+# Test

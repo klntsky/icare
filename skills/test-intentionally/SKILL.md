@@ -1,5 +1,5 @@
 ---
-name: test-intentionality
+name: test-intentionally
 description: Helps to decide when a test is worth keeping
 license: Unlicense
 ---
