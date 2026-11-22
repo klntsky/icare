@@ -5,6 +5,12 @@ output=$(realpath -m "${1:?Usage: bash scripts/build-site.sh OUTPUT_DIRECTORY}")
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 mkdir "$output"
 
+skill_names=()
+for source in skills/*/SKILL.md; do
+  name=${source#skills/}
+  skill_names+=("${name%/SKILL.md}")
+done
+
 render() {
   pandoc "$1" \
     --from=markdown+yaml_metadata_block \
@@ -17,14 +23,15 @@ render() {
     --include-before-body=scripts/site-logo.html \
     --metadata="pagetitle=$3" \
     --metadata=lang:en \
+    --metadata="skill-names=${skill_names[*]}" \
     --output="$2"
 }
 
 render README.md "$output/index.html" icare.how
 
-for source in skills/*/SKILL.md; do
-  directory=$(dirname "$source")
-  name=$(basename "$directory")
+for name in "${skill_names[@]}"; do
+  directory="skills/$name"
+  source="$directory/SKILL.md"
   page="$output/to/$name"
   mkdir -p "$page"
   cp -R "$directory/." "$page/"
