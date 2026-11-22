@@ -89,9 +89,7 @@ Trait to watch for: agentic workflow executions do not utilize their context ful
 ### How to fix
 
 Unless other considerations override that, optional context may be hidden behind tool calls that can be used to discover it. 
-Additional complexity and worse speed are valid objections to this.
-
-Fix only after user approval.
+Additional complexity and worse speed are valid objections to this. **understand-intent** first.
 
 ## CE4. Unnecessary reference indirection breaks context locality
 
@@ -140,5 +138,6 @@ Consider using a decision model for the dispatcher. Use **understand-intent** sk
 # Glossary
 
 There are two types of LLM workflows (roughly):
+
 - agentic: the LLM is expected to orient situationally in order to achieve a free form goal
 - operaitonal: the goal is constrained enough for it to be possible to achieve it following an algorithm
