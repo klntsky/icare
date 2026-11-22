@@ -1,10 +1,10 @@
 ---
-name: evaluate-intent
+name: understand-intent
 description: Understand and evaluate user's intent before making a decision. If unclear, collect arguments for and against choice options, and clarify with the user.
 license: Unlicense
 ---
 
-# Evaluate intent
+# Understand intent
 
 This skill structures human-in-the-loop LLM workflows. It's aimed at understanding what the user wants.
 

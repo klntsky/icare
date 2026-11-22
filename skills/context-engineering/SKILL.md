@@ -105,7 +105,7 @@ Information scattered across a long context, connected through opaque IDs, is an
 
 - Can opaque IDs be eliminated without duplicating data in the context?
   - Yes -> eliminate
-  - No -> use **evaluate-intent** to decide
+  - No -> use **understand-intent** to decide
 
 ## Unnecessary token spending on opaque identifiers
 
@@ -122,7 +122,7 @@ Replace long opaque IDs with short enumeration-style IDs, <some-short-fixed-pref
 Maintain a mapping from short IDs to long IDs and back. Persist it as long as the context is kept for future use. 
 Transform between two formats whenever data enters or leaves the LLM context.
 If possible, use type system guarantees to prevent accidential confusion between two formats.
-Before applying this fix, use **evaluate-intent** skill to decide whether the additional complexity is justified by the token savings.
+Before applying this fix, use **understand-intent** skill to decide whether the additional complexity is justified by the token savings.
 
 ## Operational LLM workflows contain too much decision branching
 
@@ -131,7 +131,7 @@ LLMs can perform dispatch, but they are slow.
 ### How to fix
 
 A fanout dispatcher in front of many branches with leaner context and more straightforward logic is almost always a better solution.
-Consider using a decision model for the dispatcher. Use **evaluate-intent** skill before deciding.
+Consider using a decision model for the dispatcher. Use **understand-intent** skill before deciding.
 
 
 # Glossary
