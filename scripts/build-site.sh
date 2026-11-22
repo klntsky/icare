@@ -11,6 +11,8 @@ render() {
     --to=html5 \
     --lua-filter=scripts/skill-links.lua \
     --standalone \
+    --include-in-header=scripts/github-corner-style.html \
+    --include-before-body=scripts/github-corner.html \
     --metadata="pagetitle=$3" \
     --metadata=lang:en \
     --output="$2"
