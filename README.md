@@ -24,7 +24,7 @@ Every decision must be justified by the developer's intent.
 
 # Skills
 
-- [context-engineering](skills/context-engineering/SKILL.md)
+- [engineer-llm-context](skills/engineer-llm-context/SKILL.md)
 - [test](skills/test/SKILL.md)
 - [test-efficiently](skills/test-efficiently/SKILL.md)
 - [test-intentionally](skills/test-intentionally/SKILL.md)

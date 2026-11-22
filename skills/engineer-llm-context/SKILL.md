@@ -1,10 +1,10 @@
 ---
-name: context-engineering
+name: engineer-llm-context
 description: Write and review LLM prompts and workflows to avoid common prompting pitfalls. Use when creating or changing prompts, tool instructions, or workflow context.
 license: Unlicense
 ---
 
-# Context engineering
+# Engineer LLM context
 
 LLMs are surpisingly bad at prompting, therefore any task that involves writing a prompt requires increased amount of thinking.
 
