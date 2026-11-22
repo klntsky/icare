@@ -15,6 +15,7 @@ render() {
   pandoc "$1" \
     --from=markdown+yaml_metadata_block \
     --to=html5 \
+    --lua-filter=scripts/skill-intro.lua \
     --lua-filter=scripts/skill-links.lua \
     --standalone \
     --include-in-header=scripts/github-corner-style.html \
