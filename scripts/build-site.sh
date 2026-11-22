@@ -12,7 +12,9 @@ render() {
     --lua-filter=scripts/skill-links.lua \
     --standalone \
     --include-in-header=scripts/github-corner-style.html \
+    --include-in-header=scripts/site-head.html \
     --include-before-body=scripts/github-corner.html \
+    --include-before-body=scripts/site-logo.html \
     --metadata="pagetitle=$3" \
     --metadata=lang:en \
     --output="$2"
