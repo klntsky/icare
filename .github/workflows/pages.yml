@@ -22,6 +22,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y pandoc
       - name: Test skill links
         run: python3 scripts/test-skill-links.py
+      - name: Test selectable Markdown
+        run: python3 scripts/test-selectable-markdown.py
       - name: Build site
         run: bash scripts/build-site.sh _site
       - name: Upload Pages artifact
