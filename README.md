@@ -1,4 +1,4 @@
-# icare.how
+# 💊 icare.how
 
 An agentic software development skill framework that forces you to care.
 
