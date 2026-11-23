@@ -6,26 +6,33 @@ license: Unlicense
 
 # Understand intent
 
-This skill structures human-in-the-loop LLM workflows. It's aimed at understanding what the user wants and ensuring the user understands what tradeoffs have been considered.
+This skill structures human-in-the-loop LLM workflows. It's aimed at determining what the user wants in the context of a choice to be made, and ensuring the user understands what tradeoffs have been considered.
+
+# Principles
+
+- Your responses must follow the specified formats exactly.
+- You can only pick a choice autonomously if you can provide a justification that references an existing captured intent. If you can't, you must prompt the user to specify their intent as described below.
 
 # How to
 
 If you are an AI agent and another skill referred you here, that means we need to make an informed decision between multiple options justified by the developer's intent. Your actions must be visible to the user as you go.
 
-Follow this algorithm:
+Follow this algorithm till the end exactly:
 
-1. Understand the decision that has to be made: enumerate (write down) the choice options, and categorize choice options by source:
+1. Understand the decision that has to be made in the current context: enumerate (write down) the choice options.
+
+1.1 Categorize choice options by source:
 
 - **developer**: User's (developer's) prompts
 - **spec**: Captured intent (specification, docs, etc)
 - **skill**: Skill suggestions (fixes or improvements)
-- **research**: Choice options collected by gathering data from the real world, e.g. websites
-- **code**: Choice options substantiated by code (e.g. existing implementations)
+- **research**: Choice options collected by gathering data using external lookups, web search, etc
+- **code**: Choice options substantiated by code or artifacts (e.g. existing implementations)
 
 If the choice options include skill suggestions, tell the user:
 
 ```
-For <choice in question>, evaluating these options:
+For <choice in question>, I'm evaluating these options:
 
 - **<option content>** (from: *<source here>*): <option description>
 - <repeat same format for every option>
@@ -33,16 +40,13 @@ For <choice in question>, evaluating these options:
 
 Investigate the tradeoffs between the choice options, gather the data needed to make an informed decision. 
 
-Data not accessible? -> Ask the user to provide you access using this format:
+Data not accessible? -> Ask the user to provide you access using this format and stop:
 
 ```
 While weighing the <choice in question>, I encountered a problem I can't resolve alone: <describe it here>
 ```
 
-No additional data needed? -> That's OK, don't overcomplicate
-
-2. Check if we can derive the right decision from the explicitly stated intent.
-Look for speech patterns that tell you to prioritize certain values (e.g. "We don't care about test performance" or "Correctness must not be sacrificed")
+2. Check if we can derive the right decision from the explicitly stated intent belonging to one of the (**developer**, **spec** or **skill** source categories). **research** or **code** are not valid intent sources for a usable justification.
 
 If the stated priorities clearly indicate what choice option should be prioritized, notify the user of the choice made:
 

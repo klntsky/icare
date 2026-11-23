@@ -18,8 +18,7 @@ We can overcome this limitation with manual checks and more careful explicit con
 
 ## Principles
 
-The suggested fixes for the problems below are aimed at recovering visual negative space.
-Do not fill the freed space with anything at all, and do not propose doing that.
+- The suggested fixes for the problems below are aimed at recovering visual negative space. Do not fill the freed space with anything at all, and do not propose doing that.
 
 ## Actions
 
@@ -27,18 +26,36 @@ This skill can be used in two modes:
 
 ### Improving an existing interface
 
+Go over the list of pitfalls and nothing else as part of applying this skill.
+
 ### Creating an interface from scratch 
 
-## Common user interface fallacies
+- Before starting, do UIF0 p. 2.
+- Create the interface
+- Go over the list of pitfalls as part of your review or validation process for the task.
+
+## Common user interface pitfalls
 
 ### UIF0: UX is not focused on intent
 
 How to detect & fix:
 
-- write down a mapping between UI elements in an interface and user intents that guide the user interacting with the interface (use **understand-intent** skill to gather them)
-- Pick one core intent (e.g. manage TODO entries) (ask the developer what to prioritize) and its concrete use cases (e.g. add entries, delete entries, edit entries)
-- For every UI element, write down a reason why removing it would be at odds with fulfilling the core intent.
-- If the reason is not convincing or absent, remove the element
+1. Explicitly write down a mapping between UI elements in an interface and user intents that guide the user interacting with these elements.
+
+Example:
+
+```
+- button `#click-me`:
+  - roll a dice
+  - explore the website
+  - do an unpredictable action
+- button `#close`
+  - exit
+```
+
+2. Use **understand-intent** skill to get code intent (choice options are possible interface user intents)
+3. For every UI element, write down a reason why removing it would be at odds with fulfilling the core intent.
+4. If the reason is not convincing or absent, remove the element
 
 ### UIF1: Display-only and interactive elements are not visually separated
 
