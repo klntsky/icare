@@ -93,9 +93,11 @@ Elements that are semantically attached to an action element should be tooltips,
 
 How to fix:
 
-Non-actionable elements, remove:
+For non-actionable elements, remove unless justified by intent:
+
 - hover effects
-- `pointer` or other non-standard cursor settings
+- `pointer` cursor
+- cursor override for text elements
 - button-like styling
 - box shadows, borders or other styling methods for popping them out of the background
 
