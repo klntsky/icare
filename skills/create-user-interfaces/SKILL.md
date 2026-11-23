@@ -27,7 +27,7 @@ This skill can be used in two modes:
 
 ### Improving an existing interface
 
-### Creating an interface from scratch
+### Creating an interface from scratch 
 
 ## Common user interface fallacies
 
