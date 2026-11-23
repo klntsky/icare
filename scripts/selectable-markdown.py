@@ -6,7 +6,7 @@ import re
 import sys
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlsplit
 
 
 @dataclass
@@ -34,9 +34,15 @@ class Page(HTMLParser):
         self.stack = []
         self.content_depth = None
         self.content_start = None
+        self.description = ""
+        self.title = ""
 
     def handle_starttag(self, tag, attrs):
         markup = self.get_starttag_text()
+        if tag == "meta" and "head" in self.stack:
+            metadata = dict(attrs)
+            if metadata.get("name") == "description":
+                self.description = metadata.get("content", "")
         if tag in {"a", "img"}:
             attribute = "href" if tag == "a" else "src"
             pattern = r'(\s' + attribute + r'\s*=\s*)([\'"])(.*?)\2'
@@ -64,6 +70,8 @@ class Page(HTMLParser):
             del self.stack[index:]
 
     def handle_data(self, data):
+        if "title" in self.stack:
+            self.title += data
         heading = next((int(tag[1]) for tag in reversed(self.stack) if re.fullmatch(r'h[1-6]', tag)), None)
         self.tokens.append(Text(data, self.content_depth is not None, "body" in self.stack, heading))
 
@@ -140,6 +148,17 @@ def render(source, markup, page_url):
     for index, token in enumerate(page.tokens):
         if not texts and index == page.content_start:
             output.append(syntax(source))
+        if token == "</head>" and page.description and urlsplit(page_url).path.startswith("/to/"):
+            for attribute, name, value in [
+                ("property", "og:type", "website"),
+                ("property", "og:title", page.title),
+                ("property", "og:description", page.description),
+                ("property", "og:url", page_url),
+                ("name", "twitter:card", "summary"),
+                ("name", "twitter:title", page.title),
+                ("name", "twitter:description", page.description),
+            ]:
+                output.append(f'<meta {attribute}="{name}" content="{html.escape(value, quote=True)}">\n')
         if not isinstance(token, Text):
             output.append(token)
         elif token.in_content and token.value.strip():

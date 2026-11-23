@@ -20,3 +20,10 @@ Only heading hashes are visibly added; other source syntax remains hidden but
 selectable, without JavaScript or copy handlers. Clickable links use absolute URLs
 without rewriting the original source text. Regression tests check source identity
 and preservation of the rendered HTML structure and visible text.
+
+# Website social previews
+
+Skill previews use the MDC description that Pandoc extracts into the standard
+description meta tag. `scripts/selectable-markdown.py` adds matching Open Graph
+and Twitter metadata to the built HTML head, with escaped attribute values,
+without JavaScript.
