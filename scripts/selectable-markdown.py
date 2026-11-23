@@ -159,7 +159,6 @@ def render(source, markup, page_url):
                 ("property", "og:title", page.title),
                 ("property", "og:description", page.description),
                 ("property", "og:url", page_url),
-                ("name", "twitter:card", "summary"),
                 ("name", "twitter:title", page.title),
                 ("name", "twitter:description", page.description),
             ]:

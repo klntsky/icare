@@ -31,3 +31,7 @@ Skill previews use the MDC description that Pandoc extracts into the standard
 description meta tag. `scripts/selectable-markdown.py` adds matching Open Graph
 and Twitter metadata to the built HTML head, with escaped attribute values,
 without JavaScript.
+
+Social previews use the pill emoji rasterized in `assets/social-icon.png`.
+The builder publishes it at `/social-icon.png`; Open Graph and Twitter image
+metadata use its absolute public URL.

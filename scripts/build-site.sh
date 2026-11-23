@@ -4,6 +4,7 @@ set -euo pipefail
 output=$(realpath -m "${1:?Usage: bash scripts/build-site.sh OUTPUT_DIRECTORY}")
 cd "$(dirname "${BASH_SOURCE[0]}")/.."
 mkdir "$output"
+cp assets/social-icon.png "$output/social-icon.png"
 
 skill_names=()
 for source in skills/*/SKILL.md; do

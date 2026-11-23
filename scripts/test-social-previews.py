@@ -71,6 +71,13 @@ async def main():
         assert page.metadata["og:type"] == ["website"]
         assert page.metadata["twitter:card"] == ["summary"]
         assert page.metadata["og:url"] == [url]
+        assert page.metadata["og:image"] == ["https://icare.how/social-icon.png"]
+        assert page.metadata["twitter:image"] == page.metadata["og:image"]
+        assert page.metadata["og:image:type"] == ["image/png"]
+        assert page.metadata["og:image:width"] == ["512"]
+        assert page.metadata["og:image:height"] == ["512"]
+        assert page.metadata["og:image:alt"] == ["Pill emoji"]
+        assert page.metadata["twitter:image:alt"] == ["Pill emoji"]
         assert "".join("".join(page.body).split()) == "".join(source.split())
     print("PASS: social previews use escaped, multiline MDC descriptions without changing body source text")
 
