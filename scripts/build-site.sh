@@ -12,10 +12,18 @@ for source in skills/*/SKILL.md; do
 done
 
 render() {
+  local source
+  local sources=("$1")
+  if [[ -n "${5:-}" && -f "$5" ]]; then
+    sources=("$5" "$1")
+  fi
   {
-    cat "$1"
+    for source in "${sources[@]}"; do
+      cat "$source"
+      printf '\n\n'
+    done
     printf '\0'
-    pandoc "$1" \
+    pandoc "${sources[@]}" \
     --from=markdown+yaml_metadata_block \
     --to=html5 \
     --lua-filter=scripts/skill-intro.lua \
@@ -43,7 +51,7 @@ for name in "${skill_names[@]}"; do
   page="$output/to/$name"
   mkdir -p "$page"
   cp -R "$directory/." "$page/"
-  render "$source" "$page/index.html" "$name" "https://icare.how/to/$name/"
+  render "$source" "$page/index.html" "$name" "https://icare.how/to/$name/" "$directory/README.md"
 done
 
 touch "$output/.nojekyll"

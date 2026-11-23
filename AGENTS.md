@@ -21,6 +21,10 @@ selectable, without JavaScript or copy handlers. Clickable links use absolute UR
 without rewriting the original source text. Regression tests check source identity
 and preservation of the rendered HTML structure and visible text.
 
+When a skill directory contains `README.md`, render it before `SKILL.md`.
+Selectable text preserves both sources in that order; skill metadata still supplies
+the description and social previews.
+
 # Website social previews
 
 Skill previews use the MDC description that Pandoc extracts into the standard

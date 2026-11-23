@@ -34,6 +34,7 @@ class Page(HTMLParser):
         self.stack = []
         self.content_depth = None
         self.content_start = None
+        self.intro_depth = None
         self.description = ""
         self.title = ""
 
@@ -55,6 +56,8 @@ class Page(HTMLParser):
             if tag == "main" and dict(attrs).get("id") == "content":
                 self.content_depth = len(self.stack)
                 self.content_start = len(self.tokens)
+            if tag == "div" and "skill-intro" in dict(attrs).get("class", "").split():
+                self.intro_depth = len(self.stack)
 
     def handle_startendtag(self, tag, attrs):
         self.handle_starttag(tag, attrs)
@@ -67,13 +70,15 @@ class Page(HTMLParser):
             index = len(self.stack) - 1 - self.stack[::-1].index(tag)
             if self.content_depth is not None and index < self.content_depth:
                 self.content_depth = None
+            if self.intro_depth is not None and index < self.intro_depth:
+                self.intro_depth = None
             del self.stack[index:]
 
     def handle_data(self, data):
         if "title" in self.stack:
             self.title += data
         heading = next((int(tag[1]) for tag in reversed(self.stack) if re.fullmatch(r'h[1-6]', tag)), None)
-        self.tokens.append(Text(data, self.content_depth is not None, "body" in self.stack, heading))
+        self.tokens.append(Text(data, self.content_depth is not None and self.intro_depth is None, "body" in self.stack, heading))
 
     def handle_entityref(self, name):
         self.handle_data(html.unescape('&' + name + ';'))
