@@ -53,7 +53,7 @@ Example:
   - exit
 ```
 
-2. Use **understand-intent** skill to get code intent (choice options are possible interface user intents)
+2. Use **understand-intent** skill to get UI intent (choice options are possible interface user intents)
 3. For every UI element, write down a reason why removing it would be at odds with fulfilling the core intent.
 4. If the reason is not convincing or absent, remove the element
 

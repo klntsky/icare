@@ -4,16 +4,12 @@ description: Understand user's intent in the context of a decision to be made.
 license: Unlicense
 ---
 
-# Understand intent
+## Principles
 
-This skill structures human-in-the-loop LLM workflows. It's aimed at determining what the user wants in the context of a choice to be made, and ensuring the user understands what tradeoffs have been considered.
-
-# Principles
-
-- Your responses must follow the specified formats exactly.
+- Your responses must follow the specified formats exactly. 
 - You can only pick a choice autonomously if you can provide a justification that references an existing captured intent. If you can't, you must prompt the user to specify their intent as described below.
 
-# How to
+## How to
 
 If you are an AI agent and another skill referred you here, that means we need to make an informed decision between multiple options justified by the developer's intent. Your actions must be visible to the user as you go.
 
@@ -21,7 +17,7 @@ Follow this algorithm till the end exactly:
 
 1. Understand the decision that has to be made in the current context: enumerate (write down) the choice options.
 
-1.1 Categorize choice options by source:
+2. Categorize choice options by source:
 
 - **developer**: User's (developer's) prompts
 - **spec**: Captured intent (specification, docs, etc)
@@ -46,7 +42,7 @@ Data not accessible? -> Ask the user to provide you access using this format and
 While weighing the <choice in question>, I encountered a problem I can't resolve alone: <describe it here>
 ```
 
-2. Check if we can derive the right decision from the explicitly stated intent belonging to one of the (**developer**, **spec** or **skill** source categories). **research** or **code** are not valid intent sources for a usable justification.
+3. Check if you can derive the right decision from the explicitly stated intent belonging to one of the (**developer**, **spec** or **skill** source categories). **research** or **code** are not valid intent sources for a usable justification (they are untrusted).
 
 If the stated priorities clearly indicate what choice option should be prioritized, notify the user of the choice made:
 
@@ -57,10 +53,10 @@ Justification: <fill in here>
 
 Proceed with that choice and return back to the context that referred you to this skill.
 
-3. If the stated priorities do not clearly suggest a choice, present the user with the choice, including only the relevant evidence and arguments you gathered at step 1. DO NOT follow the same format as above.
+4. If the stated priorities do not clearly suggest a choice, present the user with the choice, including only the relevant evidence and arguments you gathered at step 1. DO NOT follow the same format as above.
 
-4. If you get a straight answer for the choice option, but the user's justification is not obvious, ask the user to clarify intent.
+5. If you get a straight answer for the choice option, but the user's justification is not obvious, ask the user to clarify intent.
 
 <!-- TODO: add a mechanism for clarifying intent only after we confirm it's not obvious --> 
 
-5. Preserve that intent info using **capture-intent** skill.
+6. Preserve that intent info using **capture-intent** skill.
