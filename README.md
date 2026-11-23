@@ -31,6 +31,7 @@ Every decision must be justified by the developer's intent.
 - [test-intentionally](skills/test-intentionally/SKILL.md)
 - [capture-intent](skills/capture-intent/SKILL.md)
 - [create-user-interfaces](skills/create-user-interfaces/SKILL.md)
+- [address-concerns](skills/address-concerns/SKILL.md)
 
 # Current state of the project
 
