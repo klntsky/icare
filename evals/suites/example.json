@@ -1,0 +1,43 @@
+{
+  "cases": [
+    {
+      "id": "test-selection",
+      "prompt": "Review candidates.json and select which tests deserve permanent coverage. Write decisions.json as an object with keep and remove arrays of test IDs. Put each candidate in exactly one array, and explain your decisions in your final response.",
+      "seed": "../fixtures/test-selection",
+      "skills": ["test-intentionally"],
+      "maxSteps": 8,
+      "checks": [
+        {
+          "type": "bash",
+          "name": "Preserves authorization and concurrency coverage",
+          "command": "jq -e '.keep | sort == [\"concurrent-edit\",\"cross-user-access\"]' decisions.json"
+        },
+        {
+          "type": "bash",
+          "name": "Removes fixture mirrors and one-off validation",
+          "command": "jq -e '.remove | sort == [\"fixture-constant\",\"one-off-color\"]' decisions.json"
+        }
+      ]
+    },
+    {
+      "id": "sandbox-smoke",
+      "prompt": "Read candidates.json, count the candidates, and write only that number followed by a newline to count.txt. Then reply Done.",
+      "seed": "../fixtures/test-selection",
+      "skills": [],
+      "maxSteps": 3,
+      "timeoutMs": 30000,
+      "checks": [
+        {
+          "type": "bash",
+          "name": "Writes the computed count",
+          "command": "test \"$(cat count.txt)\" = 4"
+        },
+        {
+          "type": "response",
+          "name": "Reports completion",
+          "includes": "Done"
+        }
+      ]
+    }
+  ]
+}

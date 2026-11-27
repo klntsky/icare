@@ -1,0 +1,25 @@
+{
+  "name": "icare-evals",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "eval": "node evals/cli.ts",
+    "eval:login": "node evals/cli.ts login",
+    "check": "tsc --noEmit",
+    "test:evals": "node --test evals/*.test.ts"
+  },
+  "dependencies": {
+    "ai": "7.0.183",
+    "ai-sdk-codex-subscription-provider": "0.0.1",
+    "just-bash": "3.6.1",
+    "zod": "4.1.8"
+  },
+  "devDependencies": {
+    "@ai-sdk/provider": "4.0.39",
+    "@types/node": "^22.19.0",
+    "typescript": "^5.8.3"
+  }
+}

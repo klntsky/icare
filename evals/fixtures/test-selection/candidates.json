@@ -1,0 +1,18 @@
+[
+  {
+    "id": "cross-user-access",
+    "description": "Create documents belonging to two different users, request the other user's document through the real authorization handler, and assert access is denied."
+  },
+  {
+    "id": "concurrent-edit",
+    "description": "Have two clients update the same document version concurrently through the repository API; assert one succeeds and the other receives a conflict instead of silently overwriting data."
+  },
+  {
+    "id": "fixture-constant",
+    "description": "Create a local fixture with title set to Example and assert that the fixture's title is Example. No production code is called."
+  },
+  {
+    "id": "one-off-color",
+    "description": "A temporary validation of a completed one-off color change: search the stylesheet source and assert the newly requested hex literal is present. There is no lasting semantic design requirement for that literal."
+  }
+]
