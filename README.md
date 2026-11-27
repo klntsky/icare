@@ -12,6 +12,10 @@ Skills should be readable, almost as a textbook - while being executable by the 
 
 For that reason, the skills are 100% human-written.
 
+## Skills evolve based on measurable results + dogfooding rather than ad hoc patches
+
+TODO: add actual evals
+
 ## The agent is a teacher
 
 The agent guides the user towards a better understanding of the systems involved.
