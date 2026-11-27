@@ -1,26 +1,34 @@
 # Local skill evals
 
-Requires Node.js 22.18+ and a ChatGPT plan with Codex access.
+Requires Node.js 22.18+, pnpm 12.15.0, and a ChatGPT plan with Codex access.
 
 ```sh
-npm ci
-npm run eval:login
-npm run --silent eval -- run --case sandbox-smoke
-npm run --silent eval -- run --case test-selection --output evals/results/skills.json
-npm run --silent eval -- run --case test-selection --baseline --output evals/results/baseline.json
+pnpm install --frozen-lockfile
+pnpm eval:login
+pnpm --silent eval run --case sandbox-smoke
+pnpm --silent eval run --case test-selection --output evals/results/skills.json
+pnpm --silent eval run --case test-selection --baseline --output evals/results/baseline.json
 ```
 
-Login prints an OpenAI verification URL and a device code. Open the URL on your
-own device, sign in, and approve it. Enable device-code authorization in ChatGPT's
-security settings if OpenAI requires it. This works over SSH or a Telegram bridge;
-no browser callback to the runner is required. Never send access or refresh tokens
-in chat.
+`pnpm eval:login` runs the reusable authorization workflow: request an OpenAI
+device code, wait for approval, exchange credentials, persist them securely, and
+print the exact saved credential-file path. No manual token copying or auth-file
+creation is needed. OpenAI still requires the account owner to approve the printed
+URL/code; a script cannot bypass that consent. Device-code authorization may need
+enabling in ChatGPT's security settings.
 
-Credentials live in `$CODEX_HOME/ai-sdk.auth.json`, or
-`~/.codex/ai-sdk.auth.json`, with private permissions. They are deliberately separate
-from Codex CLI credentials to avoid sharing refresh-token rotation. The provider
-refreshes tokens automatically. `OPENAI_API_KEY` is not used and there is no
-API-billing fallback. An expired or rejected login requires authorization again.
+Run this script when setting up a checkout or replacing a rejected login. Eval
+runs reuse the saved credentials without prompting. Login is deliberately explicit
+so unattended eval runs fail promptly rather than waiting for interactive approval.
+The device flow works over SSH without a localhost browser callback.
+
+Credentials live in `.auth/codex.json` at the repository root, independent of the
+working directory. The directory is gitignored, created with mode 0700, and the
+credential file is saved atomically with mode 0600. Login prints its absolute path.
+Neither `~/.codex` nor `$CODEX_HOME` is read or written. Each checkout has its own
+login; no global credentials are reused. The provider refreshes tokens in this
+project-local store automatically. `OPENAI_API_KEY` is not used and there is no
+API-billing fallback. A rejected login requires running `pnpm eval:login` again.
 
 The [community Codex provider](https://github.com/giuseppeg/ai-sdk-codex-subscription-provider)
 uses the ChatGPT Codex subscription endpoint, not the public OpenAI API. It is
@@ -92,7 +100,7 @@ or skill directories during loading. Credentials are never seeded automatically.
 Agent edits never write back to disk. Only an explicitly requested `--output`
 report is persisted; it may contain sensitive fixture text and model output.
 
-Stdout contains the JSON report (`npm run --silent` avoids npm's command banner);
+Stdout contains the JSON report (`pnpm --silent` avoids pnpm's command banner);
 progress goes to stderr. Reports contain input/check definitions, seed and skill
 SHA-256 hashes, model ID, per-step text/tool calls/results, token usage, elapsed
 time, assertion results, and aggregate scores. Raw HTTP headers and OAuth tokens
@@ -104,8 +112,8 @@ the fraction of checks passing, not proof that a run completed successfully.
 ## Verification
 
 ```sh
-npm run check
-npm run test:evals
+pnpm check
+pnpm test:evals
 ```
 
 Tests exercise the real AI SDK tool loop with scripted model streams and real

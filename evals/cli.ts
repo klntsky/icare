@@ -1,14 +1,17 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import { auth, createCodex, createFileCodexCredentialStore, getCodexAuthPath } from "ai-sdk-codex-subscription-provider";
+import { auth, createCodex, createFileCodexCredentialStore } from "ai-sdk-codex-subscription-provider";
 import { loadSuite, loadSeed } from "./suite.ts";
 import { loadIcareSkills, selectSkills } from "./skills.ts";
 import { runCase, type EvalResult } from "./runner.ts";
 
+const authPath = fileURLToPath(new URL("../.auth/codex.json", import.meta.url));
+
 const help = `Usage:
-  npm run eval:login
-  npm run eval -- run [options]
+  pnpm eval:login
+  pnpm eval run [options]
 
 Options:
   --suite PATH    Suite JSON (default: evals/suites/example.json)
@@ -20,7 +23,7 @@ Options:
   --help          Show this help
 
 Login uses OpenAI device authorization and Codex subscription usage, not API billing.
-Credentials: $CODEX_HOME/ai-sdk.auth.json (default: ~/.codex/ai-sdk.auth.json).
+Credentials: ${authPath}
 `;
 
 async function main(): Promise<void> {
@@ -42,12 +45,12 @@ async function main(): Promise<void> {
   }
   const command = positionals[0] ?? "run";
   if (positionals.length > 1 || !["run", "login"].includes(command)) throw new Error(help);
-  const authStore = createFileCodexCredentialStore();
+  const authStore = createFileCodexCredentialStore({ authPath });
   if (command === "login") {
     const device = await auth.createDeviceAuthorization();
     console.error(`Open ${device.verificationUri}\nEnter code: ${device.userCode}\nWaiting for OpenAI authorization…`);
     await authStore.set(await auth.pollDeviceAuthorization(device));
-    console.error(`Authorized. Credentials saved to ${getCodexAuthPath()}`);
+    console.error(`Authorized. Credentials saved to ${authPath}`);
     return;
   }
   const repeat = Number(values.repeat);
@@ -61,7 +64,7 @@ async function main(): Promise<void> {
     const skills = selectSkills(catalog, entry.skills);
     prepared.push({ entry, seed: await loadSeed(entry.seed), skills: values.baseline ? new Map() : skills });
   }
-  if (!(await authStore.get())) throw new Error("OpenAI authorization required. Run npm run eval:login first. API keys are not used.");
+  if (!(await authStore.get())) throw new Error("OpenAI authorization required. Run pnpm eval:login first. API keys are not used.");
   const model = createCodex({ authStore })(values.model);
   const results: EvalResult[] = [];
   for (const input of prepared) {
