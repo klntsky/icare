@@ -59,6 +59,15 @@ Example:
 
 ### UIF1: Display-only and interactive elements are not visually separated
 
+Examples:
+
+- labels in the same visual group as buttons, navbars, links
+- interactive elements interjecting large blocks of non-interactive content without a visual grouping that guides the user's attention towards interacting with them
+
+How to fix:
+
+- **understand-intent** (choice options: move elements, remove them, regroup, or add visual markers of intent)
+
 ### UIF2: Same statements are repeated in a single view with slight variations or elaboration
 
 Example:
@@ -123,3 +132,5 @@ They can be confused with real interactive elements.
 3D-tilt them, slightly rotate, apply shifted box shadow, or draw something on top (use **understand-intent** skill to decide)
 
 ### UIF6: call-to-action fatigue
+
+One CTA per logical view is enough.
